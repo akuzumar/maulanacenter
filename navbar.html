@@ -1,0 +1,307 @@
+<style>
+  /* --- STYLES NAVBAR ISLAND --- */
+  :root {
+    --color-primary-deep: #7f0c23;
+    --color-text-soft: rgba(17, 17, 17, 0.68);
+    --font-display: "Cormorant Garamond", serif;
+    --font-body: "Plus Jakarta Sans", sans-serif;
+    --shadow-soft: 0 8px 30px rgba(0, 0, 0, 0.08);
+    --radius-lg: 24px;
+    --radius-md: 16px;
+    --container-width: 1180px;
+    --nav-layer: 2147483000;
+  }
+
+
+
+  /* Container utama navbar tetap di atas saat scroll */
+  .site-nav {
+    position: fixed;
+    top: 15px;
+    left: 0;
+    right: 0;
+    z-index: var(--nav-layer);
+    display: flex;
+    justify-content: center;
+    padding: 0 16px;
+    pointer-events: none;
+    isolation: isolate;
+  }
+
+  /* Bentuk kapsul (Island Style) */
+  .nav-shell {
+    pointer-events: auto;
+    background: rgba(255, 255, 255, 0.95);
+    width: 100%;
+    max-width: var(--container-width);
+    min-height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    padding: 10px 18px;
+    border-radius: var(--radius-lg);
+    border: 1px solid rgba(125, 90, 40, 0.1);
+    box-shadow: var(--shadow-soft);
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Brand / Logo */
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    flex: 1 1 auto;
+    min-width: 0;
+    max-width: calc(100% - 60px);
+  }
+
+  .nav-img {
+    height: 40px;
+    width: auto;
+    object-fit: contain;
+    flex-shrink: 0;
+  }
+
+  .brand-copy {
+    display: grid;
+    gap: 2px;
+    min-width: 0;
+  }
+
+  .brand-copy strong {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--color-primary-deep);
+    line-height: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .nav-current {
+    display: block;
+    font-family: var(--font-body);
+    font-size: 0.68rem;
+    font-weight: 700;
+    color: rgba(127, 12, 35, 0.65);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* Desktop Menu */
+  .nav-menu {
+    display: flex;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+    pointer-events: auto;
+  }
+
+  .nav-links {
+    display: flex;
+    list-style: none;
+    /* GANTI DISINI: Jarak antar menu diperkecil dari 16px menjadi 10px agar lebih rapat */
+    gap: 1px;
+  }
+
+  .nav-links a {
+    text-decoration: none;
+    color: var(--color-text-soft);
+    font-size: 0.85rem;
+    /* Sedikit dikecilkan untuk efisiensi ruang */
+    font-weight: 600;
+    transition: color 0.2s;
+    white-space: nowrap;
+    padding: 5px 2px;
+  }
+
+  .nav-links a:hover {
+    color: var(--color-primary-deep);
+  }
+
+  .nav-links a.is-active,
+  .nav-links a[aria-current="page"] {
+    color: var(--color-primary-deep);
+    background: rgba(127, 12, 35, 0.08);
+    border-radius: 999px;
+  }
+
+  /* Mobile Toggle Button */
+  .nav-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    width: 44px;
+    height: 44px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    position: relative;
+    z-index: 10005;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .nav-toggle span {
+    display: block;
+    height: 3px;
+    width: 25px;
+    background-color: var(--color-primary-deep);
+    border-radius: 3px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* --- MOBILE RESPONSIVE --- */
+  @media (max-width: 1024px) {
+    .site-nav {
+      top: 12px;
+      padding: 0 12px;
+    }
+
+    .nav-shell {
+      min-height: 68px;
+      padding: 10px 14px;
+      gap: 12px;
+    }
+
+    .brand {
+      max-width: calc(100% - 56px);
+    }
+
+    .nav-img {
+      height: 34px;
+    }
+
+    .brand-copy strong {
+      font-size: clamp(1rem, 5vw, 1.16rem);
+    }
+
+    .nav-current {
+      font-size: 0.6rem;
+      letter-spacing: 0.14em;
+    }
+
+    .nav-toggle {
+      display: flex;
+      flex-shrink: 0;
+    }
+
+    .nav-links {
+      display: none;
+    }
+
+    .nav-menu {
+      position: absolute;
+      top: calc(100% + 10px);
+      right: 0;
+      left: 0;
+      background: #ffffff;
+      border-radius: var(--radius-md);
+      box-shadow: 0 15px 50px rgba(0, 0, 0, 0.15);
+      padding: 10px;
+      display: none;
+      flex-direction: column;
+      border: 1px solid rgba(0, 0, 0, 0.05);
+      z-index: 10001;
+      pointer-events: auto;
+    }
+
+    .nav-menu.is-open {
+      display: flex;
+      animation: navFadeIn 0.3s ease forwards;
+    }
+
+    .nav-menu .nav-links {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      gap: 0;
+    }
+
+    .nav-menu .nav-links li {
+      width: 100%;
+    }
+
+    .nav-menu .nav-links a {
+      display: block;
+      padding: 13px 14px;
+      font-size: 1rem;
+      text-align: center;
+      border-bottom: 0;
+      border-radius: 12px;
+    }
+
+    .nav-menu .nav-links a.is-active,
+    .nav-menu .nav-links a[aria-current="page"] {
+      background: rgba(127, 12, 35, 0.08);
+    }
+
+    .nav-toggle.is-open span:nth-child(1) {
+      transform: translateY(8px) rotate(45deg);
+    }
+
+    .nav-toggle.is-open span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .nav-toggle.is-open span:nth-child(3) {
+      transform: translateY(-8px) rotate(-45deg);
+    }
+  }
+
+  @keyframes navFadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+</style>
+
+<nav class="site-nav" data-nav-root>
+  <div class="nav-shell">
+    <a class="brand" href="./" aria-label="Maulana Center Indonesia">
+      <img src="aset/logomerah.png" alt="Logo" class="nav-img" loading="eager" decoding="async">
+      <div class="brand-copy">
+        <strong>Maulana Center</strong>
+        <span class="nav-current" data-nav-current>Beranda</span>
+      </div>
+    </a>
+
+    <button class="nav-toggle" id="menu-toggle" type="button" aria-label="Buka menu" aria-expanded="false">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+    <div class="nav-menu" id="nav-menu">
+      <ul class="nav-links">
+        <li><a data-nav-link href="./">Beranda</a></li>
+        <li><a data-nav-link href="profil/">Profil</a></li>
+        <li><a data-nav-link href="pengajar/">Pengajar</a></li>
+        <li><a data-nav-link href="program/">Program</a></li>
+        <li><a data-nav-link href="proses/">Proses</a></li>
+        <li><a data-nav-link href="persyaratan/">Persyaratan</a></li>
+        <li><a data-nav-link href="biaya/">Biaya</a></li>
+        <li><a data-nav-link href="artikel/">Artikel</a></li>
+        <li><a data-nav-link href="testimoni/">Testimoni</a></li>
+        <li><a data-nav-link href="faq/">FAQ</a></li>
+        <li><a data-nav-link href="kontak/">Kontak</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>

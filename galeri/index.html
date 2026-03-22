@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta property="og:image" content="https://akuzumar.github.io/maulana/aset/ogimage.png">
+    <link rel="icon" type="image/png" href="./favicon.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Galeri Foto | Maulana Center</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+        rel="stylesheet" />
+
+    <style>
+        /* VARIABEL WARNA */
+        :root {
+            --color-bg: #a80f2d;
+            --color-card-bg: #f9ecec;
+            --color-text-main: #ffffff;
+            --color-text-dark: #2d2620;
+            --color-text-muted: #665b55;
+            --color-secondary: #d9b778;
+            --shadow-card: 0 10px 30px rgba(0, 0, 0, 0.15);
+            --shadow-hover: 0 20px 40px rgba(0, 0, 0, 0.3);
+            --radius-lg: 20px;
+            --font-body: "Plus Jakarta Sans", sans-serif;
+            --font-display: "Cormorant Garamond", serif;
+            --container: min(1300px, calc(100% - 40px));
+            --transition: 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            /* Menghilangkan highlight biru saat tap di mobile browser */
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* HILANGKAN FOCUS INDICATOR SECARA MENYELURUH */
+        /* Menghilangkan outline dan shadow default pada semua elemen */
+        *:focus {
+            outline: none !important;
+            box-shadow: none !important;
+        }
+
+        /* Menghilangkan outline khusus untuk elemen link dan button */
+        a:focus,
+        button:focus,
+        div:focus {
+            outline: none !important;
+            box-shadow: none !important;
+        }
+
+        /* Style hanya untuk navigasi keyboard agar tetap aksesibel */
+        *:focus-visible {
+            outline: 2px solid var(--color-secondary) !important;
+            outline-offset: 4px;
+        }
+
+        body {
+            background-color: var(--color-bg);
+            font-family: var(--font-body);
+            color: var(--color-text-main);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        /* BACKGROUND DEKORATIF */
+        .ambient-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background:
+                radial-gradient(circle at 15% 50%, rgba(217, 183, 120, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 85% 30%, rgba(0, 0, 0, 0.2) 0%, transparent 50%);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* TOMBOL KELUAR / KEMBALI */
+        .btn-back {
+            position: fixed;
+            top: 30px;
+            left: max(20px, calc((100% - 1300px) / 2));
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #a80f2d;
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            padding: 10px 24px;
+            border: 1px solid #c5a36366;
+            border-radius: 50px;
+            background: rgba(255, 255, 255, 0.85);
+            transition: var(--transition);
+            z-index: 999;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-back:hover {
+            background: var(--color-secondary);
+            color: var(--color-bg);
+            border-color: var(--color-secondary);
+            transform: translateX(-5px);
+        }
+
+        /* HEADER */
+        .header-section {
+            max-width: var(--container);
+            margin: 100px auto 50px;
+            text-align: center;
+            padding: 0 20px;
+            animation: fadeInDown 1s ease forwards;
+        }
+
+        .header-section .badge {
+            display: inline-block;
+            font-size: 0.85rem;
+            color: var(--color-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            font-weight: 700;
+            margin-bottom: 15px;
+            background: rgba(217, 183, 120, 0.1);
+            padding: 8px 20px;
+            border-radius: 50px;
+            border: 1px solid rgba(217, 183, 120, 0.2);
+        }
+
+        .header-section h1 {
+            font-family: var(--font-display);
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            color: var(--color-text-main);
+            margin-bottom: 20px;
+            font-weight: 700;
+            line-height: 1.1;
+        }
+
+        .header-section p {
+            font-size: 1.05rem;
+            color: rgba(255, 255, 255, 0.85);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* MASONRY GALLERY */
+        .gallery-masonry {
+            max-width: var(--container);
+            margin: 0 auto 100px;
+            padding: 0 10px;
+            column-count: 4;
+            column-gap: 24px;
+        }
+
+        .gallery-item {
+            background: var(--color-card-bg);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow-card);
+            cursor: pointer;
+            transition: var(--transition);
+            break-inside: avoid;
+            margin-bottom: 24px;
+            transform: translateY(20px);
+            opacity: 0;
+            animation: fadeInUp 0.8s ease forwards;
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            display: block;
+            object-fit: cover;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            transition: opacity 0.3s ease;
+        }
+
+        .gallery-item:hover img {
+            opacity: 0.9;
+        }
+
+        /* KONTEN TEKS */
+        .item-content {
+            padding: 20px;
+        }
+
+        .item-content .category {
+            display: block;
+            color: #8c7d75;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .item-content h3 {
+            color: var(--color-text-dark);
+            font-family: var(--font-body);
+            font-size: 1.25rem;
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 8px;
+        }
+
+        .item-content p {
+            color: var(--color-text-muted);
+            font-size: 0.9rem;
+            line-height: 1.5;
+            font-weight: 400;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        /* LIGHTBOX */
+        .lightbox {
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 5, 8, 0.95);
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+            backdrop-filter: blur(10px);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .lightbox.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .lightbox-content {
+            position: relative;
+            max-width: 900px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transform: scale(0.95);
+            transition: transform 0.3s ease;
+        }
+
+        .lightbox.active .lightbox-content {
+            transform: scale(1);
+        }
+
+        .lightbox img {
+            max-width: 100%;
+            max-height: 85vh;
+            border-radius: 12px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+            border: 2px solid rgba(217, 183, 120, 0.3);
+        }
+
+        .close-btn {
+            position: absolute;
+            top: -50px;
+            right: 0;
+            color: var(--color-text-main);
+            font-size: 30px;
+            cursor: pointer;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .close-btn:hover {
+            background: var(--color-bg);
+            border-color: var(--color-secondary);
+            color: var(--color-secondary);
+            transform: rotate(90deg);
+        }
+
+        /* ANIMASI */
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 1024px) {
+            .gallery-masonry {
+                column-count: 3;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .btn-back {
+                top: 20px;
+                left: 20px;
+                padding: 8px 16px;
+                font-size: 0.75rem;
+            }
+
+            .header-section {
+                margin-top: 90px;
+            }
+
+            .gallery-masonry {
+                column-count: 2;
+                column-gap: 16px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .gallery-masonry {
+                column-count: 1;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="ambient-bg"></div>
+
+    <a href="../" class="btn-back">
+        &larr; Keluar Dari Galeri
+    </a>
+
+    <header class="header-section">
+        <span class="badge">Koleksi Visual</span>
+        <h1>Galeri Maulana Center</h1>
+        <p>Momen-momen berharga dalam perjalanan santri menuju Universitas Al-Azhar, Mesir bersama Maulana Center.</p>
+    </header>
+
+    <main class="gallery-masonry">
+
+        <div class="gallery-item" onclick="openLightbox(this)">
+            <img src="../aset/ogimage.png" alt="Bimbingan">
+            <div class="item-content">
+                <h3>Ust. Ahmad Fauzi, Lc.</h3>
+                <p>Mengarahkan strategi pembinaan dan evaluasi kesiapan peserta.</p>
+            </div>
+        </div>
+
+        <div class="gallery-item" onclick="openLightbox(this)">
+            <img src="../aset/1.jpeg" alt="Pelepasan Santri">
+            <div class="item-content">
+                <h3>Pelepasan Santri 2023</h3>
+                <p>Momen haru keberangkatan santri gelombang pertama menuju Kairo, Mesir.</p>
+            </div>
+        </div>
+
+        <div class="gallery-item" onclick="openLightbox(this)">
+            <img src="../aset/2.jpeg" alt="Bimbingan Belajar">
+            <div class="item-content">
+                <h3>Bimbingan Intensif</h3>
+                <p>Fokus penuh dalam mempersiapkan tes masuk Universitas Al-Azhar.</p>
+            </div>
+        </div>
+
+        <div class="gallery-item" onclick="openLightbox(this)">
+            <img src="../aset/3.jpeg" alt="Kunjungan Cairo">
+            <div class="item-content">
+                <h3>Kunjungan ke Cairo</h3>
+                <p>Pengenalan lingkungan belajar dan kebudayaan lokal di Kairo.</p>
+            </div>
+        </div>
+
+        <div class="gallery-item" onclick="openLightbox(this)">
+            <img src="../aset/4.jpeg" alt="Fasilitas">
+            <div class="item-content">
+                <h3>Ruang Belajar</h3>
+                <p>Kenyamanan fasilitas untuk menunjang daya serap ilmu para santri.</p>
+            </div>
+        </div>
+
+        <div class="gallery-item" onclick="openLightbox(this)">
+            <img src="../aset/5.jpeg" alt="Seminar">
+            <div class="item-content">
+                <h3>Seminar Pendidikan</h3>
+                <p>Pembekalan mental dan wawasan keislaman sebelum keberangkatan.</p>
+            </div>
+        </div>
+
+        <div class="gallery-item" onclick="openLightbox(this)">
+            <img src="../aset/6.jpeg" alt="Diskusi">
+            <div class="item-content">
+                <h3>Forum Diskusi</h3>
+                <p>Membangun keakraban dan kekompakan antar calon mahasiswa baru.</p>
+            </div>
+        </div>
+
+        <div class="gallery-item" onclick="openLightbox(this)">
+            <img src="../aset/7.jpeg" alt="Alumni">
+            <div class="item-content">
+                <h3>Sharing Alumni</h3>
+                <p>Kisah inspiratif dari para senior yang telah sukses beradaptasi di Mesir.</p>
+            </div>
+        </div>
+
+    </main>
+
+    <div class="lightbox" id="lightbox" onclick="closeLightbox()">
+        <div class="lightbox-content" onclick="event.stopPropagation()">
+            <button class="close-btn" onclick="closeLightbox()" aria-label="Tutup lightbox">&times;</button>
+            <img id="lightbox-img" src="" alt="Zoomed image">
+        </div>
+    </div>
+
+    <script>
+        function openLightbox(element) {
+            const imgSrc = element.querySelector('img').src;
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImg = document.getElementById('lightbox-img');
+
+            lightboxImg.src = imgSrc;
+            lightbox.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            const lightbox = document.getElementById('lightbox');
+            lightbox.classList.remove('active');
+            setTimeout(() => {
+                document.body.style.overflow = '';
+            }, 300);
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeLightbox();
+        });
+    </script>
+
+</body>
+
+</html>

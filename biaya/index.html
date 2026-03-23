@@ -81,9 +81,70 @@
                 <li>Briefing adaptasi dan keberangkatan</li>
               </ul>
             </article>
+
+
+
+            <div id="modal-pendaftaran" class="modal-overlay">
+              <div class="modal-container">
+                <div class="modal-close">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <path d="M18 6L6 18M6 6l12 12" />
+                  </svg>
+                </div>
+                <div class="modal-body">
+                  <h2>Formulir Pendaftaran</h2>
+                  <form id="pendaftaran-wa" class="contact-form">
+                    <div class="form-grid">
+                      <div class="field">
+                        <label for="reg-nama">Nama Lengkap</label>
+                        <input type="text" id="reg-nama" placeholder="Contoh: Ahmad Fauzi" required>
+                      </div>
+                      <div class="field">
+                        <label for="reg-wa">Nomor WhatsApp</label>
+                        <input type="text" id="reg-wa" placeholder="Contoh: 08123456789" required>
+                      </div>
+                    </div>
+
+                    <div class="form-grid">
+                      <div class="field">
+                        <label for="reg-domisili">Domisili (Kota)</label>
+                        <input type="text" id="reg-domisili" placeholder="Contoh: Jakarta" required>
+                      </div>
+                      <div class="field">
+                        <label for="reg-umur">Umur</label>
+                        <input type="number" id="reg-umur" placeholder="Tahun" required>
+                      </div>
+                    </div>
+
+                    <div class="field">
+                      <label for="reg-sekolah">Asal Sekolah / Instansi</label>
+                      <select id="reg-sekolah" required>
+                        <option value="" disabled selected>Pilih Status Sekolah</option>
+                        <option value="SMA/MA Umum">SMA / MA Umum</option>
+                        <option value="Ma'had / Pesantren">Ma'had / Pesantren</option>
+                        <option value="Tidak Sekolah / Alumni">Tidak Sekolah / Alumni</option>
+                      </select>
+                    </div>
+                    <div class="field">
+                      <label for="reg-paket">Pilihan Paket</label>
+                      <select id="reg-paket" required>
+                        <option value="" disabled selected>Pilih Paket</option>
+                        <option value="Paket 1: Sesi Pemetaan">Paket 1: Sesi Pemetaan (Gratis)</option>
+                        <option value="Paket 2: Intensif + Mentoring">Paket 2: Intensif + Mentoring</option>
+                        <option value="Paket 3: Custom Pendampingan">Paket 3: Custom Pendampingan</option>
+                      </select>
+                    </div>
+                    <button type="submit" class="button" style="width: 100%; margin-top: 10px;">Kirim ke
+                      WhatsApp</button>
+                  </form>
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
       </section>
+      <div class="container-center">
+        <button class="button1 modal-trigger" data-target="modal-pendaftaran">Daftar Sekarang</button>
+      </div>
 
       <section class="section section--compact">
         <div class="container">

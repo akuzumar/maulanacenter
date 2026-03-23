@@ -452,3 +452,39 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 });
+
+// Tambahkan fungsi ini ke dalam script.js
+function initPendaftaranModal() {
+  const formReg = document.getElementById('pendaftaran-wa');
+
+  if (formReg) {
+    formReg.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      const nama = document.getElementById('reg-nama').value;
+      const wa = document.getElementById('reg-wa').value;
+      const domisili = document.getElementById('reg-domisili').value;
+      const umur = document.getElementById('reg-umur').value;
+      const sekolah = document.getElementById('reg-sekolah').value;
+      const paket = document.getElementById('reg-paket').value;
+
+      const nomorWA = "6285161808524"; // Nomor yang Anda minta
+
+      const pesan = `Halo Maulana Center, saya ingin mendaftar dengan data berikut:%0A%0A` +
+        `*Nama:* ${nama}%0A` +
+        `*Nomor WhatsApp:* ${wa}%0A` +
+        `*Domisili:* ${domisili}%0A` +
+        `*Umur:* ${umur} Tahun%0A` +
+        `*Sekolah:* ${sekolah}%0A` +
+        `*Pilihan Paket:* ${paket}`;
+
+      const url = `https://wa.me/${nomorWA}?text=${pesan}`;
+      window.open(url, '_blank');
+    });
+  }
+}
+
+// Pastikan fungsi ini dipanggil saat DOM dimuat
+document.addEventListener("DOMContentLoaded", () => {
+  initPendaftaranModal();
+});

@@ -1937,6 +1937,7 @@ button[disabled] {
 .footer {
   padding: 24px 0 0;
   margin-bottom: 0;
+  margin-bottom: 10px;
 }
 
 .footer-shell {

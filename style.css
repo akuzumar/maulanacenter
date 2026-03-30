@@ -1937,14 +1937,13 @@ button[disabled] {
 .footer {
   padding: 24px 0 0;
   margin-bottom: 0;
-  margin-bottom: 10px;
 }
 
 .footer-shell {
   width: var(--container);
   margin: 0 auto;
   padding: 34px;
-  border-radius: 34px 34px 0 0;
+  border-radius: 50px 0 50px 0;
   background: rgba(255, 255, 255, 0.78);
   border: 1px solid rgba(125, 90, 40, 0.12);
   box-shadow: var(--shadow-soft);
@@ -2338,7 +2337,8 @@ button[disabled] {
   .footer-shell {
     width: auto;
     margin-inline: 9px;
-    border-radius: 28px;
+    margin-bottom: 12px;
+    border-radius: 50px 0 50px 0;
   }
 
   .hero-center-logo {
